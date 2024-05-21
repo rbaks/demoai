@@ -3,15 +3,8 @@ import gradio as gr
 import logo
 import design
 
-with gr.Blocks() as demo:
-    gr.Markdown(
-    """
-    # Resultats experimentations UC Generation Design/Video
-    """
-    )
-    with gr.Tab("Logo"):
-        logo.interface.run()
-    with gr.Tab("Design"):
-        design.interface.run()
+demo = gr.TabbedInterface(
+    [logo.interface.run(), design.interface.run()], ["Logo", "Design"]
+)
 
 demo.launch(share=True)

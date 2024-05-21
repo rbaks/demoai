@@ -1,5 +1,8 @@
-from diffusers import ControlNetModel, StableDiffusionXLControlNetPipeline, AutoencoderKL
-from diffusers.utils import load_image
+from diffusers import (
+    ControlNetModel,
+    StableDiffusionXLControlNetPipeline,
+    AutoencoderKL,
+)
 from PIL import Image
 import torch
 import numpy as np
@@ -11,9 +14,11 @@ controlnet = ControlNetModel.from_pretrained(
     variant="fp16",
 )
 
-vae = AutoencoderKL.from_pretrained("madebyollin/sdxl-vae-fp16-fix", torch_dtype=torch.float16)
+vae = AutoencoderKL.from_pretrained(
+    "madebyollin/sdxl-vae-fp16-fix", torch_dtype=torch.float16
+)
 
-pipe = StableDiffusionXLControlNetPipeline.from_pretrained(
+pipeline = StableDiffusionXLControlNetPipeline.from_pretrained(
     "stabilityai/stable-diffusion-xl-base-1.0",
     controlnet=controlnet,
     vae=vae,
@@ -31,7 +36,7 @@ def choose_scheduler(scheduler_name):
             )
         case _:
             raise Exception("Scheduler not supported")()
-            
+
 
 def create_canny_image(wireframe):
     image = np.array(wireframe)
