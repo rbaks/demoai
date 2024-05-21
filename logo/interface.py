@@ -6,7 +6,7 @@ def run():
     gr.Markdown(
         """
     ## Generation conditionnelle de logos
-    Modele Text-To-Image avec [`stabilityai/stable-diffusion-xl-base-1.0`](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0) (SDXL) + Surcouche de FineTuning LoRA de [`artificialguybr/LogoRedmond-LogoLoraForSDXL-V2`](https://huggingface.co/artificialguybr/LogoRedmond-LogoLoraForSDXL-V2) pour les logos.
+    Modele Text-To-Image avec [`stabilityai/stable-diffusion-xl-base-1.0`](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0) (SDXL) + Surcouche de parametres apres FineTuning LoRA de [`artificialguybr/LogoRedmond-LogoLoraForSDXL-V2`](https://huggingface.co/artificialguybr/LogoRedmond-LogoLoraForSDXL-V2) pour les logos.
     """
     )
     with gr.Row():
@@ -14,7 +14,6 @@ def run():
             prompt = gr.Textbox(label="Prompt textuel")
         with gr.Column(scale=1, min_width=50):
             batch_size = gr.Number(label="Nombre de logos a generer.", value=10)
-            btn = gr.Button("Generer", size="lg")
     with gr.Accordion("Options avancees", open=False):
         with gr.Row():
             with gr.Column(scale=2):
@@ -54,6 +53,7 @@ def run():
                 height = gr.Slider(
                     label="Hauteur", minimum=64, maximum=1024, step=64, value=512
                 )
+    btn = gr.Button("Generer", size="lg")
     output = gr.Gallery(label="Resultats", columns=5)
     btn.click(
         fn=inference.run,
@@ -81,4 +81,4 @@ def run():
 if __name__ == "__main__":
     with gr.Blocks() as demo:
         run()
-    demo.launch(share=True)
+    demo.launch()

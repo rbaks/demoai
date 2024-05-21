@@ -1,2 +1,1 @@
-from .inference import run
-from .interface import run
+from .interface import run as displayLogo
