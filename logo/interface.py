@@ -1,6 +1,12 @@
 import gradio as gr
-import inference
 
+from pathlib import Path
+import sys
+
+PACKAGE_PATH = Path(__file__).absolute().parents[0].absolute()
+sys.path.insert(0, str(PACKAGE_PATH))
+
+from inference import run as run_inference
 
 def run():
     gr.Markdown(
@@ -56,7 +62,7 @@ def run():
     btn = gr.Button("Generer", size="lg")
     output = gr.Gallery(label="Resultats", columns=5)
     btn.click(
-        fn=inference.run,
+        fn=run_inference,
         inputs=[
             prompt,
             batch_size,
@@ -81,4 +87,4 @@ def run():
 if __name__ == "__main__":
     with gr.Blocks() as demo:
         run()
-    demo.launch()
+    demo.launch(share=True)

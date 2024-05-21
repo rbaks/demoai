@@ -1,1 +1,1 @@
-from .interface import run as displayDesign
+from . import interface

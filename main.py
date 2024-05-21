@@ -1,16 +1,17 @@
 import gradio as gr
+
 import logo
 import design
 
 with gr.Blocks() as demo:
     gr.Markdown(
     """
-    # Resultats experimentations UC Generation Desigm/Video
+    # Resultats experimentations UC Generation Design/Video
     """
     )
     with gr.Tab("Logo"):
-        logo.displayLogo()
+        logo.interface.run()
     with gr.Tab("Design"):
-        design.displayDesign()
+        design.interface.run()
 
-demo.launch()
+demo.launch(share=True)
