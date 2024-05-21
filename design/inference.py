@@ -2,6 +2,8 @@ from diffusers import (
     ControlNetModel,
     StableDiffusionXLControlNetPipeline,
     AutoencoderKL,
+    EulerDiscreteScheduler,
+    EulerAncestralDiscreteScheduler,
 )
 from PIL import Image
 import torch
@@ -51,14 +53,12 @@ def run(
     wireframe_img,
     batch_size,
     negative_prompt,
-    # scheduler_name,
-    # num_inference_steps,
+    scheduler_name,
+    num_inference_steps,
     controlnet_conditioning_scale,
-    # guidance_scale,
-    # width,
-    # height,
+    guidance_scale,
 ):
-    # pipeline.scheduler = choose_scheduler(scheduler_name)
+    pipeline.scheduler = choose_scheduler(scheduler_name)
     canny = create_canny_image(wireframe_img)
     images = []
 
@@ -71,11 +71,9 @@ def run(
                 image=canny,
                 generator=generator,
                 negative_prompt=negative_prompt,
-                # num_inference_steps=num_inference_steps,
+                num_inference_steps=num_inference_steps,
                 controlnet_conditioning_scale=controlnet_conditioning_scale,
-                # guidance_scale=guidance_scale,
-                # width=width,
-                # height=height,
+                guidance_scale=guidance_scale,
             ).images[0]
         )
         yield images

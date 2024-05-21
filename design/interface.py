@@ -8,6 +8,7 @@ sys.path.insert(0, str(PACKAGE_PATH))
 
 from .inference import run as run_inference
 
+
 def run():
     with gr.Blocks() as demo:
         gr.Markdown(
@@ -40,7 +41,7 @@ def run():
                             )
 
                     with gr.Accordion("Options avancees", open=True):
-                        inference_steps = gr.Slider(
+                        num_inference_steps = gr.Slider(
                             label="Inference Steps",
                             minimum=1,
                             maximum=100,
@@ -52,7 +53,7 @@ def run():
                             label="Guidance Scale",
                             minimum=1,
                             maximum=50,
-                            value=10.0,
+                            value=5.0,
                             step=0.5,
                             info="A quel degre le modele de generation d'image devra-t-il respecter le prompt?",
                         )
@@ -84,7 +85,7 @@ def run():
             with gr.Column():
                 wireframe_img = gr.Image(label="Wireframe")
                 prompt = gr.Textbox(label="Prompt textuel")
-                scheduler = gr.Radio(
+                scheduler_name = gr.Radio(
                     ["EulerDiscreteScheduler", "EulerAncestralDiscreteScheduler"],
                     label="Scheduler",
                     value="EulerDiscreteScheduler",
@@ -99,7 +100,10 @@ def run():
                 wireframe_img,
                 batch_size,
                 negative_prompt,
+                scheduler_name,
+                num_inference_steps,
                 controlnet_conditionning_scale,
+                guidance_scale,
             ],
             outputs=[output],
         )
